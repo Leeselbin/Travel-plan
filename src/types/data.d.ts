@@ -5,8 +5,8 @@ declare module '*.json' {
 
 export interface city {
   city: string;
-  gu: string;
-  dong: string;
+  gu?: string | null;
+  dong?: string | null;
   xVal: number;
   yVal: number;
 }

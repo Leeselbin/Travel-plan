@@ -8,12 +8,14 @@ import {city} from '../types/data';
 import {useQuery} from 'react-query';
 import React from 'react';
 
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
+
+import {get} from '../lib/network';
 
 const initCity: city = {
-  city: '서울특별시',
-  gu: '',
-  dong: '',
+  city: '부산광역시',
+  gu: null,
+  dong: null,
   xVal: 60,
   yVal: 127,
 };
@@ -35,8 +37,10 @@ const Test = () => {
   const finalUrl = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=8brCjDoKXb6BTQEjJkTPWRDbSL8UvGYNcAQdyBKylJpZ1Ddfjv1d8KQg6XUVe%2Bw0iVN%2BVgcs241ZLBZtBr%2FfEQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${today}&base_time=${now}30&nx=${x}&ny=${y}`;
   let rstCd = 'not';
   console.log('url', finalUrl);
-  const {isLoading, error, data, isFetching} = useQuery(finalUrl, () =>
-    fetch(finalUrl).then(res => res.json()),
+  const {isLoading, error, data, isFetching} = useQuery(
+    ['weather'],
+    async () => await get(finalUrl),
+    // fetch(finalUrl).then(res => res.json())
   );
 
   console.log('react query', isLoading, data);
@@ -48,12 +52,12 @@ const Test = () => {
   if (error) {
     return <Text>{'날씨 정보가 존재하지 않습니다'}</Text>;
   }
-  const temp = data.response.body.items.item.filter((item: any) => {
+  const temp = (data as any).response.body.items.item.filter((item: any) => {
     return item.category === 'T1H';
   });
-  rstCd = data.response.header.resultCode + '//' + temp[0].fcstValue;
+  const cityTemp = temp[0].fcstValue + '도';
 
-  return <Text>{isFetching ? 'Updating...' : rstCd + cityName}</Text>;
+  return <Text>{isFetching ? 'Updating...' : `${cityName}(${cityTemp})`}</Text>;
 };
 
 export default Test;
