@@ -10,16 +10,27 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "immer": "^9.0.15",
+    "lodash": "^4.17.21",
+    "mockdate": "^3.0.5",
+    "moment": "^2.29.4",
+    "qs": "^6.11.0",
     "react": "18.1.0",
     "react-native": "0.70.1",
-    "react-native-cli": "^2.0.1"
+    "react-native-cli": "^2.0.1",
+    "react-query": "^3.34.19",
+    "zustand": "^3.7.2",
+    "zustand-persist": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/jest-dom": "^5.16.4",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^26.0.23",
+    "@types/qs": "^6.9.7",
     "@types/react-native": "^0.70.0",
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
