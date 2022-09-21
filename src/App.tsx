@@ -8,9 +8,9 @@
  * @format
  */
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {type PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -42,19 +42,31 @@ const queryClient = new QueryClient();
 const RootNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigator}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 const BottomTabNavigator = () => {
   return (
-    <BottomTab.Navigator initialRouteName='Main'>
-      <BottomTab.Screen name='Main' component={Main} options={{ headerShown: false }} />
-      <BottomTab.Screen name='Temp' component={Temp} options={{ headerShown: false }} />
+    <BottomTab.Navigator initialRouteName="Main">
+      <BottomTab.Screen
+        name="Main"
+        component={Main}
+        options={{headerShown: false}}
+      />
+      <BottomTab.Screen
+        name="Temp"
+        component={Temp}
+        options={{headerShown: false}}
+      />
     </BottomTab.Navigator>
-  )
-}
+  );
+};
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';

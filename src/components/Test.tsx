@@ -35,12 +35,10 @@ const Test = () => {
   const x = cityInfo.xVal || 55;
   const y = cityInfo.yVal || 127;
   const finalUrl = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=8brCjDoKXb6BTQEjJkTPWRDbSL8UvGYNcAQdyBKylJpZ1Ddfjv1d8KQg6XUVe%2Bw0iVN%2BVgcs241ZLBZtBr%2FfEQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=${today}&base_time=${now}30&nx=${x}&ny=${y}`;
-  let rstCd = 'not';
   console.log('url', finalUrl);
   const {isLoading, error, data, isFetching} = useQuery(
     ['weather'],
     async () => await get(finalUrl),
-    // fetch(finalUrl).then(res => res.json())
   );
 
   console.log('react query', isLoading, data);
