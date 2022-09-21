@@ -33,6 +33,8 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import Main from './pages/Main';
 import Temp from './pages/Temp';
 
+import {SAMPLE_API_KEY} from '@env';
+
 const Stack = createNativeStackNavigator();
 
 const BottomTab = createBottomTabNavigator();
@@ -69,6 +71,8 @@ const BottomTabNavigator = () => {
 };
 
 const App = () => {
+  console.log('>> SAMPLE_API_KEY = ', SAMPLE_API_KEY);
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
