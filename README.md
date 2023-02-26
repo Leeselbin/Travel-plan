@@ -22,6 +22,10 @@ yarn start
 
 > > > atomic(options)
 
+# axois base url
+
+Appinner 안에 axios.defaults.baseURL = ''; 통해서 설정가능
+
 # 화면 이동
 
 const navigation = useNavigation<RootStackNavigationProp>();

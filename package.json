@@ -17,6 +17,7 @@
     "@react-navigation/native-stack": "^6.9.1",
     "@tanstack/react-query": "^4.24.10",
     "@types/styled-components": "^5.1.26",
+    "axios": "^1.3.4",
     "react": "^18.1.0",
     "react-native": "0.70.3",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
