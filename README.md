@@ -14,6 +14,12 @@ yarn build:ios
 
 yarn start
 
+# 안드로이드 실기기 연결
+1. yarn start 로 서버실행
+2. 안드로이드폰과 노트북 연결 (유선으로)
+3. adb devices (프로젝트 루트경로에서 )명령어로 연결확인
+4. adb reverse tcp:8081 tcp:8081   (프로젝트 루트경로에서 ) 명렁어 실행 
+
 # 신규 개발 시 screen template
 
 > screens
