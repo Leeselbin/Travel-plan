@@ -6,7 +6,7 @@ yarn install
 
 pod install
 
-# ios build
+# ios build ( 안해도 상관없음 안되면 하세요 )
 
 yarn build:ios
 
