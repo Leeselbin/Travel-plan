@@ -2,6 +2,8 @@
 
 //TODO: axios error handlring , token, refresh 검사
 
+//TODO: refreshToken 갱신 주기 생각하기
+
 // HTTP 응답 status 코드에 따른 에러 처리
 // 지정된 오류가 아닐 시 interceptor에서 throw처리 필요
 export const handleErrorResponse = (
