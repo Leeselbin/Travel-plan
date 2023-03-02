@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//native용 웹뷰용은 localstorage 또는 zustand사용
+
 // 데이터 저장하기
 export const saveData = async (key: string, value: string): Promise<void> => {
   try {

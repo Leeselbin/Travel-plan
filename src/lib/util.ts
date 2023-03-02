@@ -1,4 +1,5 @@
 // HTTP 응답 status 코드에 따른 에러 처리
+// 지정된 오류가 아닐 시 interceptor에서 throw처리
 export const handleErrorResponse = (status, errorCode) => {
   switch (status) {
     case 400:
