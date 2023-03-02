@@ -4,7 +4,7 @@ yarn install
 
 # ios 연동
 
-pod install
+cd ios && pod install
 
 # ios build ( 안해도 상관없음 안되면 하세요 )
 
