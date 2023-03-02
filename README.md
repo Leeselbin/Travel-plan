@@ -8,7 +8,7 @@ cd ios && pod install
 
 # ios build ( 안해도 상관없음 안되면 하세요 )
 
-yarn build:ios
+yarn build:ios 
 
 # local 환경 구동
 
