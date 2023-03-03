@@ -37,6 +37,9 @@ const useApi = ({url, quyeryKey, config}: IQuery) => {
         callback();
       }
     } else {
+      const errorMessage =
+        SERVICE_ERROR_MESSAGES[res.errorCode] || SERVICE_ERROR_MESSAGES.default;
+      Alert.alert(errorMessage);
       if (errorCallback) {
         errorCallback();
       }
