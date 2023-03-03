@@ -11,7 +11,7 @@ interface IReponseData {
   errorCode?: string;
 }
 
-const instance = axios.create({
+export const apiClient = axios.create({
   baseURL: '',
 });
 
@@ -32,7 +32,7 @@ axios.interceptors.request.use(
 );
 
 // 응답 인터셉터
-instance.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
@@ -60,5 +60,3 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-export default instance;
