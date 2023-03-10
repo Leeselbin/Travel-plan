@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
+import _ from 'lodash';
 import {getData} from './storage';
 import {handleErrorResponse} from './util';
 
@@ -38,18 +39,25 @@ instance.interceptors.response.use(
   },
   (error: AxiosError) => {
     // HTTP 응답이 200이 아닌 경우
-    if (error.response) {
-      const {status, data}: {status: number; data: IReponseData} =
-        error.response;
+    if (error.response && _.isEmpty(error.response)) {
+      const status = error.response?.status;
+      const data = error.response?.data as IReponseData;
+
+      let errorCode = '500';
+
+      if (data && _.has(data, 'errorCode') && data.errorCode) {
+        errorCode = data.errorCode;
+      }
+
       if (status >= 400 && status < 500) {
         // 400 ~ 499 에러 처리
-        handleErrorResponse(status, data.errorCode);
+        handleErrorResponse(status, errorCode);
       } else if (status >= 500) {
         // 500 에러 처리
-        handleErrorResponse(status, null);
-      } else if (data && data.errorCode) {
+        handleErrorResponse(status, '500');
+      } else if (data && errorCode) {
         // 서버에서 발생한 에러 처리
-        throw new Error(data.errorCode);
+        throw new Error(errorCode);
       }
     } else if (error.request) {
       // 요청이 전송되지 않은 경우
