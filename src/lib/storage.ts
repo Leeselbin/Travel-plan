@@ -21,3 +21,5 @@ export const getData = async (key: string): Promise<string | null> => {
     return null;
   }
 };
+
+export default AsyncStorage;
