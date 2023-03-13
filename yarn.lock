@@ -6205,7 +6205,7 @@
     "react-shallow-renderer" "^16.15.0"
     "scheduler" "^0.22.0"
 
-"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.1.0", "react@>= 16.8.0", "react@>=0.14.5", "react@>=17.0.0", "react@18.1.0":
+"react@*", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.1.0", "react@>= 16.8.0", "react@>=0.14.5", "react@>=16.8", "react@>=16.8.0", "react@>=17.0.0", "react@18.1.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -7379,7 +7379,7 @@
   "resolved" "https://registry.npmjs.org/use-latest-callback/-/use-latest-callback-0.1.5.tgz"
   "version" "0.1.5"
 
-"use-sync-external-store@^1.0.0", "use-sync-external-store@^1.2.0":
+"use-sync-external-store@^1.0.0", "use-sync-external-store@^1.2.0", "use-sync-external-store@1.2.0":
   "integrity" "sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA=="
   "resolved" "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
   "version" "1.2.0"
@@ -7669,3 +7669,15 @@
   "integrity" "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
   "resolved" "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   "version" "0.1.0"
+
+"zustand-persist@^0.4.0":
+  "integrity" "sha512-u6bBIc4yZRpSKBKuTNhoqvoIb09gGHk2NkiPg4K7MPIWTYZg70PlpBn48QEDnKZwfNurnf58TaW5BuMGIMf5hw=="
+  "resolved" "https://registry.npmjs.org/zustand-persist/-/zustand-persist-0.4.0.tgz"
+  "version" "0.4.0"
+
+"zustand@^4.3.6", "zustand@>=3.6.3":
+  "integrity" "sha512-6J5zDxjxLE+yukC2XZWf/IyWVKnXT9b9HUv09VJ/bwGCpKNcaTqp7Ws28Xr8jnbvnZcdRaidztAPsXFBIqufiw=="
+  "resolved" "https://registry.npmjs.org/zustand/-/zustand-4.3.6.tgz"
+  "version" "4.3.6"
+  dependencies:
+    "use-sync-external-store" "1.2.0"
