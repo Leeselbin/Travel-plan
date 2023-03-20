@@ -119,3 +119,16 @@ const queryClient = new QueryClient({
   })
 });
 ```
+
+
+
+
+
+
+
+
+# 꺠알 팁
+React native Modal 2개 사용시
+ - 1개의 모달을 사용하여 버튼을 이용하여 2번째 모달을 사용할시에
+ - android 에서는 잘작동하지만
+ - ios 에서는 첫번째 modal이 완전히 종료된뒤에 2번째modal을 띄어줘야 modal이 표시된다
