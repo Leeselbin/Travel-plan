@@ -138,3 +138,12 @@ ios에서 꼬인 디펜던시를 푸는 방법
 1. ios 프로젝트에서 Pods, Podfile.lock 날리고 pod install 다시 하기
 2. Xcode열고 Product -> ‘Clean Build Folder’ (cmd + Shift + K)
 3. 3. metro 종료 후 재시작
+   
+   
+onchange event 관리 react.js 와 react-native 차이가 있음
+```
+- React JS
+ onChange={(event)=> console.log(event.target.value)}
+- ReactNative
+ onChange={(event) => console.log(event.nativeEvent.text)}
+```
