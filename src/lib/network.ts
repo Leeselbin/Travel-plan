@@ -3,7 +3,8 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import {getData} from './storage';
+import _ from 'lodash';
+//   import {getData} from './storage';
 import {handleErrorResponse} from './util';
 
 interface IReponseData {
@@ -18,7 +19,8 @@ export const apiClient = axios.create({
 // 요청 인터셉터 설정
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = getData('token');
+    //   const token = getData('token');
+    const token = 'token here';
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -26,37 +28,44 @@ axios.interceptors.request.use(
     return config;
   },
   (error: AxiosError) => {
-    // 요청 에러 처리
-    return Promise.reject(error);
+    if (error.request) {
+      handleErrorResponse(0, 'Request failed');
+    } else {
+      handleErrorResponse(0, 'Request failed');
+    }
   },
 );
 
 // 응답 인터셉터
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
+    // 서비스 에러 발생, 요청한곳으로 전파
+    if (response.data && _.has(response.data, 'errorCode')) {
+      const errorCode = response.data.errorCode;
+      throw new Error(errorCode);
+    }
     return response;
   },
   (error: AxiosError) => {
-    // HTTP 응답이 200이 아닌 경우
-    if (error.response) {
-      const {status, data}: {status: number; data: IReponseData} =
-        error.response;
-      if (status >= 400 && status < 500) {
-        // 400 ~ 499 에러 처리
-        handleErrorResponse(status, data.errorCode);
-      } else if (status >= 500) {
-        // 500 에러 처리
-        handleErrorResponse(status, null);
-      } else if (data && data.errorCode) {
-        // 서버에서 발생한 에러 처리
-        throw new Error(data.errorCode);
+    // 오류발생
+    if (error.response && _.isEmpty(error.response)) {
+      const status = error.response?.status;
+      const data = error.response?.data as IReponseData;
+
+      let errorCode = '500';
+
+      // errorCode 검사
+      if (data && _.has(data, 'errorCode') && data.errorCode) {
+        errorCode = data.errorCode;
       }
+
+      handleErrorResponse(status, errorCode);
     } else if (error.request) {
-      // 요청이 전송되지 않은 경우
-      console.error(error.request);
+      // 요청실패
+      handleErrorResponse(0, 'Request failed');
     } else {
-      console.error(error.message);
+      // 기타 문제
+      handleErrorResponse(0, error.message);
     }
-    return Promise.reject(error);
   },
 );
