@@ -147,3 +147,6 @@ onchange event 관리 react.js 와 react-native 차이가 있음
 - ReactNative
  onChange={(event) => console.log(event.nativeEvent.text)}
 ```
+
+
+test
