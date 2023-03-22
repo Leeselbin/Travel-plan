@@ -3,9 +3,9 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import _ from 'lodash';
+import { has, isEmpty } from 'lodash-es';
 //   import {getData} from './storage';
-import {handleErrorResponse} from './util';
+import { handleErrorResponse } from './util';
 
 interface IReponseData {
   data?: any;
@@ -40,7 +40,7 @@ axios.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
     // 서비스 에러 발생, 요청한곳으로 전파
-    if (response.data && _.has(response.data, 'errorCode')) {
+    if (response.data && has(response.data, 'errorCode')) {
       const errorCode = response.data.errorCode;
       throw new Error(errorCode);
     }
@@ -48,14 +48,14 @@ apiClient.interceptors.response.use(
   },
   (error: AxiosError) => {
     // 오류발생
-    if (error.response && _.isEmpty(error.response)) {
+    if (error.response && isEmpty(error.response)) {
       const status = error.response?.status;
       const data = error.response?.data as IReponseData;
 
       let errorCode = '500';
 
       // errorCode 검사
-      if (data && _.has(data, 'errorCode') && data.errorCode) {
+      if (data && has(data, 'errorCode') && data.errorCode) {
         errorCode = data.errorCode;
       }
 

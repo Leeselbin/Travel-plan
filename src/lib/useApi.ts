@@ -1,8 +1,8 @@
-import {Alert} from 'react-native';
-import {AxiosResponse} from 'axios';
-import {QueryKey, useMutation, useQuery} from '@tanstack/react-query';
-import {SERVICE_ERROR_MESSAGES} from './constants';
-import {apiClient} from './network';
+import { Alert } from 'react-native';
+import { AxiosResponse } from 'axios';
+import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
+import { SERVICE_ERROR_MESSAGES } from './constants';
+import { apiClient } from './network';
 
 interface IQuery {
   quyeryKey?: QueryKey;
@@ -21,11 +21,11 @@ interface ApiData {
   data: any;
 }
 
-const useApi = ({url, quyeryKey, config}: IQuery) => {
-  const {callback, errorCallback} = config;
+const useApi = ({ url, quyeryKey, config }: IQuery) => {
+  // const {callback, errorCallback} = config;
 
   const onError = (error: any) => {
-    const {status} = error.response;
+    const { status } = error.response;
     const errorMessage =
       SERVICE_ERROR_MESSAGES[status] || SERVICE_ERROR_MESSAGES.default;
     Alert.alert(errorMessage);
@@ -33,8 +33,8 @@ const useApi = ({url, quyeryKey, config}: IQuery) => {
 
   const onSuccess = (res: AxiosResponse<ApiData> | any) => {
     if (res.status === 200 && !res.data.errorCode) {
-      if (callback) {
-        callback();
+      if (config?.callback) {
+        config?.callback();
       }
     } else {
       const errorMessage =
@@ -56,7 +56,7 @@ const useApi = ({url, quyeryKey, config}: IQuery) => {
   };
 
   const useQueryFn = async () => {
-    const {data} = await apiClient.get(url);
+    const { data } = await apiClient.get(url);
     return data;
   };
 
