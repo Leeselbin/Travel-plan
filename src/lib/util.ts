@@ -1,12 +1,6 @@
 export const handleErrorResponse = (
-  status: number,
-  errorCode: string | null | undefined,
-  request?: any,
+  status?: number,
+  code?: string | null | undefined,
 ) => {
-  console.log('>>> error : ', status, '//', errorCode, '//', request);
-  if (request) {
-    console.log('서버 상태가 off');
-  } else {
-    console.log('오류 발생');
-  }
+  console.log('Network >>> 오류가 발생했습니다.', status, code);
 };

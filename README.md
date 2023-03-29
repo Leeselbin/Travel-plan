@@ -50,41 +50,25 @@ const navigation = useNavigation<RootStackNavigationProp>();
    ],
    });
 
-# api fetch
+# api fetch - 3/29 수정본
 
-```
-get 호출 : useQuery
-param : (key:string | Array<string>, api : any, param?: any, options?: any)
+# api 호출
 
-get 외 : useMutation
-param : (key: string | Array<string>, api : any, param?: any, option?: any)
-
-
-const { isLoading, isError, data, error } = useQuery("getRapport", fetchRapportList, {
-refetchOnWindowFocus: false, // react-query는 focus가 달랃졋을때 재실행 여부 옵션
-retry: 0, // 실패시 재호출 몇번 할지
-onSuccess: data => {  // 성공시 호출  },
-onError: e => {
-// 실패시 호출 (401, 404 같은 error가 아니라 정말 api 호출이 실패한 경우만 호출됩니다.)
-// 강제로 에러 발생시키려면 api단에서 throw Error 날립니다.}
-});
-enabled: true // true 가 되면 useQuery 수행 ( 동기적으로 처리 가능 )
-
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>;
-  }
-```
-
-# api re -fetch
-
-```
-import { useQueryClient } from 'react-query';
-const queryClient = useQueryClient();
-queryClient.invalidateQueries(지정한key); //을 실행하면 이전에 가져온 데이터를 다시 re-fetch 한다.
+```    
+const { status, data, isLoading, isFetching, refetch } = useApi({
+        quyeryKey: ['test', 'second'],
+        url: '/branch/find?page=1&pageSize=2&sort=',
+        //method: 'post'   => useQuery는 'get', useMutation은 'post' 가 dafault입니다
+        //다만 조회목적의 쿼리인데 post를 사용해야할 때 넣으시면 됩니다.
+        config: {
+            callback: (res:Data) => {
+                //success
+            },
+            errorCallback: () => {
+                //service errror
+            }
+        }
+    }).useQuery
 ```
 
 # api 여러개

@@ -1,47 +1,57 @@
-import { Alert } from 'react-native';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
-import { SERVICE_ERROR_MESSAGES } from './constants';
-import { apiClient } from './network';
+import instance from '@lib/network';
+import { isError } from '@lib/constants';
+import CustomError from '@lib/CustomError';
 
 interface IQuery {
   quyeryKey?: QueryKey;
   url: string;
   config?: ApiConfig;
+  param?: any;
+  method?: 'get' | 'post' | 'put' | 'delete'
 }
-
 interface ApiConfig {
-  callback?: () => void;
-  errorCallback?: () => void;
+  callback?: (res: ApiData) => void;
+  errorCallback?: (res: ApiData) => void;
 }
 
-interface ApiData {
-  errorCode: string;
+export interface ApiData {
+  code: string;
   message: string;
   data: any;
+  timestamp: string;
 }
 
-const useApi = ({ url, quyeryKey, config }: IQuery) => {
+const useApi = ({ url, quyeryKey, method, param, config }: IQuery) => {
 
-  const onError = (error: Error) => {
-    const { message } = error;
-    const errorMessage =
-      SERVICE_ERROR_MESSAGES[message] || SERVICE_ERROR_MESSAGES.default;
-    Alert.alert(errorMessage);
+  const onError = (error: any) => {
+    if (error instanceof CustomError) {
+      if (config && config.errorCallback) {
+        const serviceErrorData: ApiData = error.response?.data;
+        if (isError(serviceErrorData.code)) {
+          config.errorCallback(serviceErrorData);
+        } else {
+          console.log(`예상치 못한 서비스 오류가 발생했습니다, ${serviceErrorData.code}`)
+        }
+      }
+    }
   };
 
   const onSuccess = (res: AxiosResponse<ApiData> | any) => {
-    if (res.status === 200 && !res.data.errorCode) {
+    if (res.code === 'SUCCESS') {
       if (config && config.callback) {
-        config.callback();
+        config.callback(res.data);
       }
     } else {
-      const errorMessage =
-        SERVICE_ERROR_MESSAGES[res.errorCode] || SERVICE_ERROR_MESSAGES.default;
-      Alert.alert(errorMessage);
-      if (config && config.errorCallback) {
-        config.errorCallback();
+      if (isError(res.code)) {
+        console.log(res.message);
+
+        if (config && config.errorCallback) {
+          config.errorCallback(res);
+        }
       }
+
     }
   };
 
@@ -55,20 +65,43 @@ const useApi = ({ url, quyeryKey, config }: IQuery) => {
   };
 
   const useQueryFn = async () => {
-    const { data } = await apiClient.get(url);
-    return data;
+    let rst = null;
+
+    if (method === 'post') {
+      rst = await instance.post(url, param);
+    } else if (method === 'put') {
+      rst = await instance.put(url, param);
+    } else if (method === 'delete') {
+      rst = await instance.delete(url);
+    } else {
+      rst = await instance.get(url);
+
+    }
+
+    return rst.data;
   };
 
-  const useMutationFn = async (data: any) => {
-    await apiClient.post(url, data);
+  const useMutationFn = async (body: any) => {
+
+    let rst = null;
+
+    if (method === 'put') {
+      rst = await instance.put(url, body);
+    } else if (method === 'delete') {
+      rst = await instance.delete(url, body);
+    } else {
+      rst = await instance.post(url, body);
+    }
+
+    return rst.data;
   };
 
   const useQueryInstance = useQuery(quyeryKey || ['inputQueryKey'], useQueryFn, useQueryOptions);
   const useMutationInstance = useMutation(useMutationFn, useMutationOptions);
 
   return {
-    useQuery: useQueryInstance,
-    useMutation: useMutationInstance,
+    useQuery: { ...useQueryInstance, data: useQueryInstance.error ? null : useQueryInstance.data?.data },
+    useMutation: { ...useMutationInstance, data: useQueryInstance.error ? null : useQueryInstance.data?.data },
   };
 };
 
