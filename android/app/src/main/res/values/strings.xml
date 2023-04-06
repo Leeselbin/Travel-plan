@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TravelPlan</string>
+    <string name="kakao_app_key">f36e8511c5c7de31386a570c1a596aa4</string>
 </resources>

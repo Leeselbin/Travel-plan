@@ -2,9 +2,9 @@ import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {ColContainer, Image} from './utils/StyledComponent';
-import {I_HOME_FOCUS, I_HOME_UNFOCUS} from './utils/icons';
-import {colors} from './utils/colors';
+import {ColContainer, Image} from './src/utils/StyledComponent';
+import {I_HOME_FOCUS, I_HOME_UNFOCUS} from './src/utils/icons';
+import {colors} from './src/utils/colors';
 import {StyleSheet, Text} from 'react-native';
 import Home from './src/screens/Home';
 import Member from './src/screens/Member';
@@ -37,7 +37,7 @@ export type RootStackParamList = {
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const isLoggedIn = false;
+const isLoggedIn = true;
 
 function AppInner() {
   /* 테스트 서버 */

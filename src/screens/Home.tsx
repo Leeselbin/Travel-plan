@@ -1,8 +1,8 @@
 import React from 'react';
 import {Platform, StatusBar, StyleSheet, Text, View} from 'react-native';
-import {colors} from '../../utils/colors';
-import {statusBarHeight} from '../../utils/measurements';
-import {ColContainer} from '../../utils/StyledComponent';
+import {colors} from '../utils/colors';
+import {statusBarHeight} from '../utils/measurements';
+import {ColContainer} from '../utils/StyledComponent';
 
 function Home() {
   return (
