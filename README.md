@@ -104,6 +104,26 @@ const queryClient = new QueryClient({
 });
 ```
 
+# 꺠알 팁
+React native Modal 2개 사용시
+ - 1개의 모달을 사용하여 버튼을 이용하여 2번째 모달을 사용할시에
+ - android 에서는 잘작동하지만
+ - ios 에서는 첫번째 modal이 완전히 종료된뒤에 2번째modal을 띄어줘야 modal이 표시된다
+   
+   
+ios에서 꼬인 디펜던시를 푸는 방법
+1. ios 프로젝트에서 Pods, Podfile.lock 날리고 pod install 다시 하기
+2. Xcode열고 Product -> ‘Clean Build Folder’ (cmd + Shift + K)
+3. 3. metro 종료 후 재시작
+   
+   
+onchange event 관리 react.js 와 react-native 차이가 있음
+```
+- React JS
+ onChange={(event)=> console.log(event.target.value)}
+- ReactNative
+ onChange={(event) => console.log(event.nativeEvent.text)}
+```
 
 
 
