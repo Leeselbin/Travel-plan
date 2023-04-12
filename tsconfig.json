@@ -12,7 +12,19 @@
       ],
       "@store/*": [
         "src/store/*"
-      ]
+      ],
+      "@cmp/*": [
+        "src/components/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@atm/*": [
+        "src/atoms/*"
+      ],
+      "@screen/*": [
+        "src/screens/*"
+      ],
     }
   },
   "include": [

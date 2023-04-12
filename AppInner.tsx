@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import {ColContainer, Image} from './src/utils/StyledComponent';
-import {I_HOME_FOCUS, I_HOME_UNFOCUS} from './src/utils/icons';
-import {colors} from './src/utils/colors';
-import {StyleSheet, Text} from 'react-native';
+import { ColContainer, Image } from './src/utils/StyledComponent';
+import { I_HOME_FOCUS, I_HOME_UNFOCUS } from './src/utils/icons';
+import { colors } from './src/utils/colors';
+import { StyleSheet, Text } from 'react-native';
 import Home from './src/screens/Home';
 import Member from './src/screens/Member';
 import My from './src/screens/My';
@@ -18,7 +18,7 @@ export type LoggedInParamList = {
   Orders: undefined;
   Settings: undefined;
   Delivery: undefined;
-  Complete: {orderId: string};
+  Complete: { orderId: string };
   Member: undefined;
   My: undefined;
   Shopping: undefined;
@@ -68,11 +68,11 @@ function AppInner() {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({focused}) => {
+          tabBarIcon: ({ focused }) => {
             return (
-              <ColContainer style={{alignItems: 'center'}}>
+              <ColContainer style={{ alignItems: 'center' }}>
                 <Image
-                  style={{width: 20, height: 20, marginTop: 5}}
+                  style={{ width: 20, height: 20, marginTop: 5 }}
                   source={focused ? I_HOME_FOCUS : I_HOME_UNFOCUS}
                   resizeMode={'contain'}
                 />
@@ -87,12 +87,12 @@ function AppInner() {
           },
         }}
       />
-      <Tab.Screen name="Member" component={Member} options={{title: '멤버'}} />
-      <Tab.Screen name="My" component={My} options={{title: '내 정보'}} />
+      <Tab.Screen name="Member" component={Member} options={{ title: '멤버' }} />
+      <Tab.Screen name="My" component={My} options={{ title: '내 정보' }} />
       <Tab.Screen
         name="Shopping"
         component={Shopping}
-        options={{title: '쇼핑'}}
+        options={{ title: '쇼핑' }}
       />
     </Tab.Navigator>
   ) : (
