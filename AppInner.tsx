@@ -13,6 +13,8 @@ import Shopping from './src/screens/Shopping';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import axios from 'axios';
+import { useState } from 'react';
+import AuthStore from '@store/AuthStore';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -37,14 +39,12 @@ export type RootStackParamList = {
 const Tab = createBottomTabNavigator<LoggedInParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const isLoggedIn = true;
+
 
 function AppInner() {
-  /* 테스트 서버 */
-  axios.defaults.baseURL = '';
 
-  /* 가동 서버  */
-  // axios.defaults.baseURL = "";
+
+  const { isLoggedIn } = AuthStore();
 
   // TODO: 네비게이터별로 컴포넌트화 해서 삽입
   return !isLoggedIn ? (

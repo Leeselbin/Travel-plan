@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../AppInner';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
-import {RowContainer} from '../utils/StyledComponent';
+import { RowContainer } from '../utils/StyledComponent';
 import {
   KakaoOAuthToken,
   KakaoProfile,
@@ -20,10 +20,15 @@ import {
   logout,
   unlink,
 } from '@react-native-seoul/kakao-login';
+import AuthStore from '@store/AuthStore';
 
 type SignInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
-function SignIn({navigation}: SignInScreenProps) {
+function SignIn({ navigation }: SignInScreenProps) {
+
+
+  const { setLoggedIn } = AuthStore();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRef = useRef<TextInput | null>(null);
@@ -57,15 +62,14 @@ function SignIn({navigation}: SignInScreenProps) {
   const signInWithKakao = async (): Promise<void> => {
     console.log('진입');
     const token: KakaoOAuthToken = await login();
-    console.log(token);
-
+    console.log('카카오 로그인 결과 >> ', token);
+    setLoggedIn(token ? true : false);
     setResult(JSON.stringify(token));
   };
 
   // 카카오 로그아웃
   const signOutWithKakao = async (): Promise<void> => {
     const message = await logout();
-
     setResult(message);
   };
 
@@ -126,9 +130,9 @@ function SignIn({navigation}: SignInScreenProps) {
             style={
               canGoNext
                 ? StyleSheet.compose(
-                    styles.loginButton,
-                    styles.loginButtonActive,
-                  )
+                  styles.loginButton,
+                  styles.loginButtonActive,
+                )
                 : styles.loginButton
             }
             disabled={!canGoNext}
