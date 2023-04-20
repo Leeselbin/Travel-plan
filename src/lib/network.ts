@@ -1,12 +1,15 @@
 import axios, {
   AxiosError,
+  AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
 import { has, isEmpty } from 'lodash-es';
-//   import {getData} from './storage';
+import { getData, setData } from './storage';
 import { handleErrorResponse } from '@lib/util';
 import CustomError from '@lib/CustomError';
+import { getApiToken, refreshApiToken, setApiToken } from './keychain';
+import { API_TOKEN_EXPIRATION_TIME_THRESHOLD } from './constants';
 
 const instance = axios.create({
   baseURL: ``,
@@ -20,26 +23,35 @@ export interface ApiData {
 }
 
 // 요청 인터셉터 설정
-axios.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    //   const token = getData('token');
-    const token = 'token here';
-    if (token) {
-      // eslint-disable-next-line no-param-reassign
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+axios.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  const apiToken = await getApiToken();
+  const expirationTime = apiToken ? parseInt(apiToken) : undefined;
 
-    return config;
-  },
-  (error: AxiosError) => {
-    if (error.request) {
-      handleErrorResponse(error.response?.status);
-    } else {
-      handleErrorResponse(0, 'Request failed');
+  // API 인증용 토큰이 존재하면서 만료시간이 지나지 않은 경우
+  if (apiToken && expirationTime && expirationTime > new Date().getTime() && expirationTime - new Date().getTime() > API_TOKEN_EXPIRATION_TIME_THRESHOLD) {
+    config.headers['Authorization'] = `Bearer ${apiToken}`;
+  }
+  // API 인증용 토큰이 존재하면서 만료시간이 지난 경우
+  else if (apiToken && (!expirationTime || expirationTime < new Date().getTime())) {
+    console.log('API token is expired.');
+    const newToken = await refreshApiToken();
+    if (newToken) {
+      await setApiToken(newToken);
+      config.headers['Authorization'] = `Bearer ${newToken}`;
     }
-    return Promise.reject(error.message);
-  },
-);
+  }
+  // API 인증용 토큰이 존재하지 않는 경우
+  else {
+    console.log('API token not found.');
+    const newToken = await refreshApiToken();
+    if (newToken) {
+      await setApiToken(newToken);
+      config.headers['Authorization'] = `Bearer ${newToken}`;
+    }
+  }
+
+  return config;
+});
 
 // 응답 인터셉터
 instance.interceptors.response.use(

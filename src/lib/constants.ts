@@ -31,3 +31,6 @@ export const ErrorCode = {
 export const isError = (errorCode: string): boolean => {
   return Object.values(ErrorCode).includes(errorCode);
 }
+
+export const API_TOKEN_EXPIRATION_TIME_THRESHOLD = 1000 * 60 * 10;
+export const API_TOKEN_KEY = 'apiToken';
